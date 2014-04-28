@@ -64,7 +64,7 @@ shift $(($OPTIND - 1))
 
 REPOSDIR=${REPOSDIR:-${REPOSDIR_DEFAULT}}
 #DSTDIR="${REPOSERVER}:mycompany/${PRJNAME}.git"
-DATEFMT=$(LC_ALL=C date +%F_%k-%M-%S)
+DATEFMT=$(LC_ALL=C date +%F_%H-%M-%S)
 
 #echo "repos dir $REPOSDIR"
 #echo "dst dir: $DSTDIR"
@@ -102,6 +102,7 @@ for i in "${REPOSDIR}"/*.git;do
     if [ $rcode -ne 0 ];then
         errc=$((errc + 1))
     fi
+    bzip2 -6f "${DSTDIR}/${rname}/${rname}.${DATEFMT}.gitbundle"
 done
 if [[ $errc -ne 0 ]];then
     echo "$errc repos backup failed"
